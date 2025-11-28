@@ -179,6 +179,45 @@ function createButton(text, onClickHandler, isDisabled){
     }
 
 
+    function handleDeleteClick(index) {
+        if (confirm(`Are you sure you want to delete "${taskdata[index].text}"?`)) {
+            taskData.splice(index, 1);
+            saveTasks();
+            renderTasks();
+            updateProgress();
+        }
+    }
+
+    function handleEditClick(index,taskSpan) {
+        const currentText = tasksData[index].text;
+        const newText = propmt("Edit your habit/task",currentText);
+
+        if (newText !==null && newText.trim!() !== "" && newText.trim() !== currentText) {
+             taskData.[index].text = newText.trim();
+            saveTasks();
+            renderTasks();
+            updateProgress();
+            //No need to update progress, status hasn't changed
+        } else {
+            console.log("No changes made or cancelled.");
+        }
+
+    }
+            
+    
+    
+{
+    // Reset all task to not done for the next day
+    taskData = taskData.map(task => ({
+        text: task.text,
+        done: false 
+    }));
+
+    saveTasks();
+    renderTasks();  
+    updateProgress();
+}
 </script>
+
 </body>
 </html>
